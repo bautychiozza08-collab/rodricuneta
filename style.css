@@ -1,67 +1,130 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: Arial;
+  font-family: Arial, sans-serif;
   background:
-    radial-gradient(circle at top, #00ff88 0%, transparent 30%),
-    linear-gradient(#020502, #000);
+    radial-gradient(circle at top, rgba(0, 255, 136, 0.28), transparent 35%),
+    linear-gradient(135deg, #031006, #000);
   color: white;
+  min-height: 100vh;
 }
 
 .app {
-  width: 95%;
+  width: min(1250px, 94%);
   margin: auto;
+  padding: 22px 0;
 }
 
 header {
   text-align: center;
-  padding: 20px;
+  padding: 18px 0;
 }
 
 h1 {
-  font-size: 45px;
+  font-size: clamp(28px, 6vw, 52px);
   color: #00ff88;
-  text-shadow: 0 0 15px #00ff88;
+  margin: 0;
+  text-shadow: 0 0 18px rgba(0, 255, 136, 0.75);
+}
+
+header p {
+  opacity: 0.8;
+  font-size: clamp(14px, 3vw, 18px);
 }
 
 .panel {
   display: grid;
-  grid-template-columns: 1fr 200px 150px 150px;
-  gap: 10px;
-  padding: 15px;
-  background: rgba(0,255,100,0.1);
-  border-radius: 15px;
+  grid-template-columns: 1fr 170px 120px 120px;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(0, 255, 136, 0.10);
+  border: 1px solid rgba(0, 255, 136, 0.25);
+  border-radius: 22px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+  backdrop-filter: blur(12px);
 }
 
 input, select, button {
-  padding: 12px;
-  border-radius: 10px;
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
   border: none;
+  outline: none;
+  font-size: 15px;
+}
+
+input, select {
+  background: rgba(255,255,255,0.95);
+  color: #031006;
 }
 
 button {
-  background: #00ff88;
+  background: linear-gradient(180deg, #00ff88, #00b85f);
+  color: #021006;
+  font-weight: 800;
   cursor: pointer;
-  font-weight: bold;
+  transition: 0.18s;
 }
 
 button:hover {
-  transform: scale(1.05);
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 0 18px rgba(0,255,136,0.45);
+}
+
+#clearBtn {
+  background: linear-gradient(180deg, #ff5252, #c62828);
+  color: white;
 }
 
 .layout {
   display: grid;
-  grid-template-columns: 1fr 300px;
+  grid-template-columns: 1fr 320px;
   gap: 20px;
   margin-top: 20px;
 }
 
 .field {
   position: relative;
-  height: 700px;
+  height: 720px;
+  border: 5px solid white;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow:
+    inset 0 0 35px rgba(0,0,0,0.35),
+    0 28px 70px rgba(0,0,0,0.55);
   background:
-    repeating-linear-gradient(#1e8f2e, #1e8f2e 70px, #167024 70px, #167024 140px);
+    linear-gradient(rgba(255,255,255,0.06), rgba(0,0,0,0.08)),
+    repeating-linear-gradient(
+      to bottom,
+      #27b63a 0px,
+      #27b63a 78px,
+      #17902b 78px,
+      #17902b 156px
+    );
+}
+
+.field::before {
+  content: "";
+  position: absolute;
+  inset: 28px;
+  border: 4px solid rgba(255,255,255,0.9);
+  pointer-events: none;
+}
+
+.field::after {
+  content: "";
+  position: absolute;
+  width: 160px;
+  height: 160px;
   border: 4px solid white;
-  border-radius: 15px;
+  border-radius: 50%;
+  left: 50%;
+  bottom: 105px;
+  transform: translateX(-50%);
+  pointer-events: none;
 }
 
 .player {
@@ -69,48 +132,181 @@ button:hover {
   transform: translate(-50%, -50%);
   text-align: center;
   cursor: pointer;
+  transition: 0.18s;
+  z-index: 2;
+  width: 86px;
+}
+
+.player:hover {
+  transform: translate(-50%, -50%) scale(1.08);
 }
 
 .avatar {
-  width: 45px;
-  height: 45px;
-  background: #ffd2a6;
+  width: 44px;
+  height: 44px;
+  margin: auto;
   border-radius: 50%;
+  background:
+    linear-gradient(#111 0 25%, #ffd2a6 25% 100%);
   border: 3px solid white;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.45);
 }
 
 .shirt {
-  width: 55px;
-  height: 35px;
-  background: #00ff88;
-  border-radius: 10px;
-  border: 2px solid white;
+  width: 58px;
+  height: 40px;
+  margin: -6px auto 0;
+  border-radius: 16px 16px 10px 10px;
+  border: 3px solid white;
+  background:
+    linear-gradient(90deg, #020202 0 22%, #00ff88 22% 78%, #020202 78%);
   position: relative;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.35);
 }
 
 .number {
   position: absolute;
-  top: 5px;
-  left: 0;
-  right: 0;
-  font-weight: bold;
-  color: black;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  color: #001b0d;
+  font-size: 18px;
 }
 
 .name {
+  margin-top: 5px;
+  padding: 4px 7px;
+  background: rgba(0,0,0,0.7);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 9px;
   font-size: 12px;
-  margin-top: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .saved {
-  background: rgba(0,255,100,0.1);
-  padding: 15px;
-  border-radius: 15px;
+  background: rgba(0, 255, 136, 0.10);
+  border: 1px solid rgba(0, 255, 136, 0.22);
+  border-radius: 22px;
+  padding: 16px;
+  box-shadow: 0 22px 50px rgba(0,0,0,0.45);
+  max-height: 720px;
+  overflow-y: auto;
+}
+
+.saved h2 {
+  margin-top: 0;
+  color: #00ff88;
 }
 
 .saved-team {
-  background: rgba(0,0,0,0.4);
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 10px;
+  background: rgba(0,0,0,0.45);
+  border: 1px solid rgba(255,255,255,0.13);
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 16px;
+}
+
+.saved-team strong {
+  display: block;
+  font-size: 17px;
+  margin-bottom: 5px;
+}
+
+.saved-team button {
+  margin-top: 8px;
+}
+
+/* CELULAR */
+@media (max-width: 850px) {
+  .app {
+    width: 96%;
+    padding: 12px 0;
+  }
+
+  header {
+    padding: 12px 0;
+  }
+
+  .panel {
+    grid-template-columns: 1fr;
+    border-radius: 18px;
+  }
+
+  input, select, button {
+    font-size: 16px;
+    padding: 15px;
+  }
+
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .field {
+    height: 620px;
+    border-radius: 18px;
+  }
+
+  .field::before {
+    inset: 18px;
+  }
+
+  .field::after {
+    width: 120px;
+    height: 120px;
+    bottom: 85px;
+  }
+
+  .player {
+    width: 70px;
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .shirt {
+    width: 48px;
+    height: 34px;
+  }
+
+  .number {
+    font-size: 15px;
+  }
+
+  .name {
+    font-size: 10px;
+    padding: 3px 5px;
+  }
+
+  .saved {
+    max-height: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .field {
+    height: 560px;
+  }
+
+  .player {
+    width: 62px;
+  }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .shirt {
+    width: 42px;
+    height: 30px;
+  }
+
+  .name {
+    font-size: 9px;
+  }
 }
