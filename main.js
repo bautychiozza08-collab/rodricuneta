@@ -2,87 +2,187 @@ const field = document.getElementById("field");
 const formationSelect = document.getElementById("formationSelect");
 const saveBtn = document.getElementById("saveBtn");
 const clearBtn = document.getElementById("clearBtn");
-const exportBtn = document.getElementById("exportBtn");
-const savedTeams = document.getElementById("savedTeams");
+const savedTeamsDiv = document.getElementById("savedTeams");
 const teamNameInput = document.getElementById("teamName");
 
 const formations = {
-  "4-4-2": [[50,10],[20,25],[40,25],[60,25],[80,25],[20,50],[40,50],[60,50],[80,50],[40,80],[60,80]],
-  "4-3-3": [[50,10],[20,25],[40,25],[60,25],[80,25],[30,50],[50,45],[70,50],[25,80],[50,85],[75,80]],
-  "4-2-3-1": [[50,10],[20,25],[40,25],[60,25],[80,25],[40,45],[60,45],[25,65],[50,65],[75,65],[50,85]],
-  "3-5-2": [[50,10],[30,25],[50,25],[70,25],[15,50],[35,50],[50,45],[65,50],[85,50],[40,80],[60,80]],
-  "3-4-3": [[50,10],[30,25],[50,25],[70,25],[20,50],[40,50],[60,50],[80,50],[25,80],[50,85],[75,80]],
-  "5-3-2": [[50,10],[15,25],[30,25],[50,25],[70,25],[85,25],[30,50],[50,45],[70,50],[40,80],[60,80]],
-  "5-4-1": [[50,10],[15,25],[30,25],[50,25],[70,25],[85,25],[20,55],[40,55],[60,55],[80,55],[50,85]]
+  "4-4-2": [
+    { pos: "ARQ", x: 50, y: 10 },
+    { pos: "LD", x: 18, y: 25 },
+    { pos: "DFC", x: 38, y: 25 },
+    { pos: "DFC", x: 62, y: 25 },
+    { pos: "LI", x: 82, y: 25 },
+    { pos: "MD", x: 18, y: 50 },
+    { pos: "MC", x: 38, y: 50 },
+    { pos: "MC", x: 62, y: 50 },
+    { pos: "MI", x: 82, y: 50 },
+    { pos: "DC", x: 38, y: 80 },
+    { pos: "DC", x: 62, y: 80 }
+  ],
+  "4-3-3": [
+    { pos: "ARQ", x: 50, y: 10 },
+    { pos: "LD", x: 18, y: 25 },
+    { pos: "DFC", x: 38, y: 25 },
+    { pos: "DFC", x: 62, y: 25 },
+    { pos: "LI", x: 82, y: 25 },
+    { pos: "MC", x: 30, y: 50 },
+    { pos: "MCD", x: 50, y: 46 },
+    { pos: "MC", x: 70, y: 50 },
+    { pos: "EI", x: 25, y: 80 },
+    { pos: "DC", x: 50, y: 84 },
+    { pos: "ED", x: 75, y: 80 }
+  ],
+  "4-2-3-1": [
+    { pos: "ARQ", x: 50, y: 10 },
+    { pos: "LD", x: 18, y: 25 },
+    { pos: "DFC", x: 38, y: 25 },
+    { pos: "DFC", x: 62, y: 25 },
+    { pos: "LI", x: 82, y: 25 },
+    { pos: "MCD", x: 40, y: 43 },
+    { pos: "MCD", x: 60, y: 43 },
+    { pos: "EI", x: 25, y: 63 },
+    { pos: "MCO", x: 50, y: 63 },
+    { pos: "ED", x: 75, y: 63 },
+    { pos: "DC", x: 50, y: 84 }
+  ],
+  "4-1-4-1": [
+    { pos: "ARQ", x: 50, y: 10 },
+    { pos: "LD", x: 18, y: 25 },
+    { pos: "DFC", x: 38, y: 25 },
+    { pos: "DFC", x: 62, y: 25 },
+    { pos: "LI", x: 82, y: 25 },
+    { pos: "MCD", x: 50, y: 42 },
+    { pos: "MD", x: 18, y: 58 },
+    { pos: "MC", x: 38, y: 58 },
+    { pos: "MC", x: 62, y: 58 },
+    { pos: "MI", x: 82, y: 58 },
+    { pos: "DC", x: 50, y: 84 }
+  ],
+  "3-5-2": [
+    { pos: "ARQ", x: 50, y: 10 },
+    { pos: "DFC", x: 30, y: 26 },
+    { pos: "DFC", x: 50, y: 24 },
+    { pos: "DFC", x: 70, y: 26 },
+    { pos: "MD", x: 15, y: 51 },
+    { pos: "MC", x: 35, y: 51 },
+    { pos: "MCD", x: 50, y: 47 },
+    { pos: "MC", x: 65, y: 51 },
+    { pos: "MI", x: 85, y: 51 },
+    { pos: "DC", x: 40, y: 80 },
+    { pos: "DC", x: 60, y: 80 }
+  ],
+  "3-4-3": [
+    { pos: "ARQ", x: 50, y: 10 },
+    { pos: "DFC", x: 30, y: 26 },
+    { pos: "DFC", x: 50, y: 24 },
+    { pos: "DFC", x: 70, y: 26 },
+    { pos: "MD", x: 20, y: 51 },
+    { pos: "MC", x: 40, y: 51 },
+    { pos: "MC", x: 60, y: 51 },
+    { pos: "MI", x: 80, y: 51 },
+    { pos: "EI", x: 25, y: 80 },
+    { pos: "DC", x: 50, y: 84 },
+    { pos: "ED", x: 75, y: 80 }
+  ],
+  "5-3-2": [
+    { pos: "ARQ", x: 50, y: 10 },
+    { pos: "LD", x: 14, y: 26 },
+    { pos: "DFC", x: 32, y: 25 },
+    { pos: "DFC", x: 50, y: 23 },
+    { pos: "DFC", x: 68, y: 25 },
+    { pos: "LI", x: 86, y: 26 },
+    { pos: "MC", x: 32, y: 52 },
+    { pos: "MCD", x: 50, y: 48 },
+    { pos: "MC", x: 68, y: 52 },
+    { pos: "DC", x: 40, y: 80 },
+    { pos: "DC", x: 60, y: 80 }
+  ],
+  "5-4-1": [
+    { pos: "ARQ", x: 50, y: 10 },
+    { pos: "LD", x: 14, y: 26 },
+    { pos: "DFC", x: 32, y: 25 },
+    { pos: "DFC", x: 50, y: 23 },
+    { pos: "DFC", x: 68, y: 25 },
+    { pos: "LI", x: 86, y: 26 },
+    { pos: "MD", x: 20, y: 57 },
+    { pos: "MC", x: 40, y: 57 },
+    { pos: "MC", x: 60, y: 57 },
+    { pos: "MI", x: 80, y: 57 },
+    { pos: "DC", x: 50, y: 84 }
+  ]
 };
 
-let players = [];
+let currentPlayers = [];
 let draggingIndex = null;
+let dragMoved = false;
 
-formationSelect.addEventListener("change", createTeam);
+formationSelect.addEventListener("change", () => createFormation(formationSelect.value));
 saveBtn.addEventListener("click", saveTeam);
-clearBtn.addEventListener("click", clearTeam);
-exportBtn.addEventListener("click", exportImage);
+clearBtn.addEventListener("click", clearField);
 
-createTeam();
-loadSaved();
+createFormation("4-4-2");
+renderSavedTeams();
 
-function createTeam() {
-  const oldPlayers = players;
+function createFormation(formationName) {
+  const oldPlayers = currentPlayers;
 
-  players = formations[formationSelect.value].map((pos, i) => ({
-    x: oldPlayers[i]?.x || pos[0],
-    y: oldPlayers[i]?.y || pos[1],
-    name: oldPlayers[i]?.name || "",
-    number: oldPlayers[i]?.number || i + 1
+  currentPlayers = formations[formationName].map((player, index) => ({
+    ...player,
+    name: oldPlayers[index]?.name || "",
+    number: oldPlayers[index]?.number || index + 1
   }));
 
-  render();
+  renderField();
 }
 
-function render() {
-  field.innerHTML = "";
+function renderField() {
+  field.querySelectorAll(".player").forEach(el => el.remove());
 
-  players.forEach((p, i) => {
+  currentPlayers.forEach((player, index) => {
     const div = document.createElement("div");
     div.className = "player";
-    div.style.left = p.x + "%";
-    div.style.top = p.y + "%";
+    div.style.left = `${player.x}%`;
+    div.style.top = `${player.y}%`;
 
     div.innerHTML = `
       <div class="avatar"></div>
       <div class="shirt">
-        <div class="number">${p.number}</div>
+        <div class="number">${player.number || index + 1}</div>
       </div>
-      <div class="name">${p.name || "Jugador"}</div>
+      <div class="name">${player.name || "Jugador"}</div>
+      <div class="position">${player.pos}</div>
     `;
 
-    div.addEventListener("click", () => editPlayer(i));
-    div.addEventListener("mousedown", e => startDrag(e, i));
-    div.addEventListener("touchstart", e => startDrag(e, i), { passive: false });
+    div.addEventListener("click", () => {
+      if (!dragMoved) editPlayer(index);
+    });
+
+    div.addEventListener("mousedown", e => startDrag(e, index));
+    div.addEventListener("touchstart", e => startDrag(e, index), { passive: false });
 
     field.appendChild(div);
   });
 }
 
-function editPlayer(i) {
-  if (draggingIndex !== null) return;
+function editPlayer(index) {
+  const current = currentPlayers[index];
 
-  const name = prompt("Nombre del jugador:", players[i].name);
+  const name = prompt(`Nombre para ${current.pos}:`, current.name);
   if (name === null) return;
 
-  const number = prompt("Número de camiseta:", players[i].number);
+  const number = prompt(`Número de camiseta:`, current.number || index + 1);
   if (number === null) return;
 
-  players[i].name = name.trim();
-  players[i].number = number.trim();
+  current.name = name.trim();
+  current.number = number.trim();
 
-  render();
+  renderField();
 }
 
-function startDrag(e, i) {
+function startDrag(e, index) {
   e.preventDefault();
-  draggingIndex = i;
+  draggingIndex = index;
+  dragMoved = false;
 }
 
 document.addEventListener("mousemove", moveDrag);
@@ -92,6 +192,7 @@ function moveDrag(e) {
   if (draggingIndex === null) return;
 
   e.preventDefault();
+  dragMoved = true;
 
   const rect = field.getBoundingClientRect();
   const clientX = e.touches ? e.touches[0].clientX : e.clientX;
@@ -103,10 +204,10 @@ function moveDrag(e) {
   x = Math.max(5, Math.min(95, x));
   y = Math.max(5, Math.min(95, y));
 
-  players[draggingIndex].x = x;
-  players[draggingIndex].y = y;
+  currentPlayers[draggingIndex].x = x;
+  currentPlayers[draggingIndex].y = y;
 
-  render();
+  renderField();
 }
 
 document.addEventListener("mouseup", stopDrag);
@@ -115,82 +216,88 @@ document.addEventListener("touchend", stopDrag);
 function stopDrag() {
   setTimeout(() => {
     draggingIndex = null;
-  }, 80);
+    dragMoved = false;
+  }, 120);
 }
 
 function saveTeam() {
-  const name = teamNameInput.value.trim() || "Equipo";
+  const teamName = teamNameInput.value.trim();
 
-  const data = {
-    name,
-    formation: formationSelect.value,
-    players
-  };
-
-  const saved = JSON.parse(localStorage.getItem("teams") || "[]");
-  saved.push(data);
-
-  localStorage.setItem("teams", JSON.stringify(saved));
-  loadSaved();
-
-  alert("Equipo guardado.");
-}
-
-function loadSaved() {
-  const saved = JSON.parse(localStorage.getItem("teams") || "[]");
-
-  savedTeams.innerHTML = "";
-
-  if (saved.length === 0) {
-    savedTeams.innerHTML = "<p>No hay equipos guardados.</p>";
+  if (!teamName) {
+    alert("Poné un nombre para el equipo.");
     return;
   }
 
-  saved.forEach((t, i) => {
+  const team = {
+    id: Date.now(),
+    name: teamName,
+    formation: formationSelect.value,
+    players: currentPlayers
+  };
+
+  const saved = getSavedTeams();
+  saved.push(team);
+
+  localStorage.setItem("dtTeams", JSON.stringify(saved));
+  renderSavedTeams();
+  alert("Equipo guardado.");
+}
+
+function getSavedTeams() {
+  return JSON.parse(localStorage.getItem("dtTeams")) || [];
+}
+
+function renderSavedTeams() {
+  const saved = getSavedTeams();
+  savedTeamsDiv.innerHTML = "";
+
+  if (saved.length === 0) {
+    savedTeamsDiv.innerHTML = "<p>No hay equipos guardados todavía.</p>";
+    return;
+  }
+
+  saved.forEach(team => {
     const div = document.createElement("div");
     div.className = "saved-team";
 
     div.innerHTML = `
-      <strong>${t.name}</strong>
-      <p>${t.formation}</p>
-      <button onclick="loadTeam(${i})">Cargar</button>
-      <button onclick="deleteTeam(${i})">Borrar</button>
+      <strong>${team.name}</strong>
+      <span>Formación: ${team.formation}</span>
+      <button onclick="loadTeam(${team.id})">Cargar</button>
+      <button class="delete-btn" onclick="deleteTeam(${team.id})">Borrar</button>
     `;
 
-    savedTeams.appendChild(div);
+    savedTeamsDiv.appendChild(div);
   });
 }
 
-function loadTeam(i) {
-  const saved = JSON.parse(localStorage.getItem("teams") || "[]");
-  const team = saved[i];
+function loadTeam(id) {
+  const saved = getSavedTeams();
+  const team = saved.find(t => t.id === id);
+
+  if (!team) return;
 
   teamNameInput.value = team.name;
   formationSelect.value = team.formation;
-  players = team.players;
+  currentPlayers = team.players;
 
-  render();
+  renderField();
 }
 
-function deleteTeam(i) {
-  const saved = JSON.parse(localStorage.getItem("teams") || "[]");
-  saved.splice(i, 1);
+function deleteTeam(id) {
+  const saved = getSavedTeams().filter(team => team.id !== id);
 
-  localStorage.setItem("teams", JSON.stringify(saved));
-  loadSaved();
+  localStorage.setItem("dtTeams", JSON.stringify(saved));
+  renderSavedTeams();
 }
 
-function clearTeam() {
-  players = players.map(p => ({
-    ...p,
+function clearField() {
+  currentPlayers = currentPlayers.map(player => ({
+    ...player,
     name: "",
     number: ""
   }));
 
   teamNameInput.value = "";
-  render();
-}
-
-function exportImage() {
-  alert("Para exportar imagen real necesitamos agregar una librería. Por ahora podés hacer captura de pantalla.");
+  renderField();
 }

@@ -6,7 +6,7 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   background:
-    radial-gradient(circle at top, rgba(0, 255, 136, 0.28), transparent 35%),
+    radial-gradient(circle at top, rgba(0,255,136,0.28), transparent 35%),
     linear-gradient(135deg, #031006, #000);
   color: white;
   min-height: 100vh;
@@ -24,14 +24,14 @@ header {
 }
 
 h1 {
-  font-size: clamp(28px, 6vw, 52px);
+  font-size: clamp(30px, 6vw, 54px);
   color: #00ff88;
   margin: 0;
-  text-shadow: 0 0 18px rgba(0, 255, 136, 0.75);
+  text-shadow: 0 0 20px rgba(0,255,136,0.85);
 }
 
 header p {
-  opacity: 0.8;
+  opacity: 0.82;
   font-size: clamp(14px, 3vw, 18px);
 }
 
@@ -40,8 +40,8 @@ header p {
   grid-template-columns: 1fr 170px 120px 120px;
   gap: 12px;
   padding: 16px;
-  background: rgba(0, 255, 136, 0.10);
-  border: 1px solid rgba(0, 255, 136, 0.25);
+  background: rgba(0,255,136,0.10);
+  border: 1px solid rgba(0,255,136,0.25);
   border-radius: 22px;
   box-shadow: 0 20px 50px rgba(0,0,0,0.45);
   backdrop-filter: blur(12px);
@@ -74,7 +74,7 @@ button:hover {
   box-shadow: 0 0 18px rgba(0,255,136,0.45);
 }
 
-#clearBtn {
+#clearBtn, .delete-btn {
   background: linear-gradient(180deg, #ff5252, #c62828);
   color: white;
 }
@@ -86,12 +86,21 @@ button:hover {
   margin-top: 20px;
 }
 
+.field-card, .saved {
+  background: rgba(0,255,136,0.10);
+  border: 1px solid rgba(0,255,136,0.22);
+  border-radius: 22px;
+  padding: 16px;
+  box-shadow: 0 22px 50px rgba(0,0,0,0.45);
+}
+
 .field {
   position: relative;
   height: 720px;
   border: 5px solid white;
   border-radius: 24px;
   overflow: hidden;
+  touch-action: none;
   box-shadow:
     inset 0 0 35px rgba(0,0,0,0.35),
     0 28px 70px rgba(0,0,0,0.55);
@@ -131,10 +140,14 @@ button:hover {
   position: absolute;
   transform: translate(-50%, -50%);
   text-align: center;
-  cursor: pointer;
-  transition: 0.18s;
+  cursor: grab;
+  transition: transform 0.14s;
   z-index: 2;
   width: 86px;
+}
+
+.player:active {
+  cursor: grabbing;
 }
 
 .player:hover {
@@ -177,7 +190,7 @@ button:hover {
 .name {
   margin-top: 5px;
   padding: 4px 7px;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0,0,0,0.72);
   border: 1px solid rgba(255,255,255,0.18);
   border-radius: 9px;
   font-size: 12px;
@@ -186,13 +199,19 @@ button:hover {
   text-overflow: ellipsis;
 }
 
+.position {
+  font-size: 11px;
+  opacity: 0.82;
+}
+
+.hint {
+  opacity: 0.78;
+  text-align: center;
+  margin-bottom: 0;
+}
+
 .saved {
-  background: rgba(0, 255, 136, 0.10);
-  border: 1px solid rgba(0, 255, 136, 0.22);
-  border-radius: 22px;
-  padding: 16px;
-  box-shadow: 0 22px 50px rgba(0,0,0,0.45);
-  max-height: 720px;
+  max-height: 760px;
   overflow-y: auto;
 }
 
